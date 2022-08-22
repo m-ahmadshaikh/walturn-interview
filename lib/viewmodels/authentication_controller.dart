@@ -9,8 +9,9 @@ class Authentication extends StateNotifier<AsyncValue<UserModel>> {
     state = const AsyncLoading();
     try {
       final model = await ApiService.getUsers(email: email, password: password);
-      state = AsyncData(model);
-      return model;
+      if (model != null) {
+        state = AsyncData(model);
+      }
     } catch (e) {
       state = AsyncError(e.toString());
     }

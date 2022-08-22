@@ -1,52 +1,34 @@
 import 'dart:convert';
 
 class UserModel {
-  String? email;
-  String? createdAt;
-  String? updatedAt;
-  String? name;
-  int? age;
+  User? user;
+  String? token;
   UserModel({
-    this.email,
-    this.createdAt,
-    this.updatedAt,
-    this.name,
-    this.age,
+    this.user,
+    this.token,
   });
 
   UserModel copyWith({
-    String? email,
-    String? createdAt,
-    String? updatedAt,
-    String? name,
-    int? age,
+    User? user,
+    String? token,
   }) {
     return UserModel(
-      email: email ?? this.email,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      name: name ?? this.name,
-      age: age ?? this.age,
+      user: user ?? this.user,
+      token: token ?? this.token,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'email': email,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      'name': name,
-      'age': age,
+      'user': user?.toMap(),
+      'token': token,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      email: map['user']['email'],
-      createdAt: map['user']['createdAt'],
-      updatedAt: map['user']['updatedAt'],
-      name: map['user']['name'],
-      age: map['user']['age'],
+      user: User.fromMap(map['user']),
+      token: map['token'],
     );
   }
 
@@ -56,28 +38,112 @@ class UserModel {
       UserModel.fromMap(json.decode(source));
 
   @override
+  String toString() => 'UserModel(user: $user, token: $token)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is UserModel && other.user == user && other.token == token;
+  }
+
+  @override
+  int get hashCode => user.hashCode ^ token.hashCode;
+}
+
+class User {
+  int? age;
+  String? sId;
+  String? name;
+  String? email;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+  User({
+    this.age,
+    this.sId,
+    this.name,
+    this.email,
+    this.createdAt,
+    this.updatedAt,
+    this.iV,
+  });
+
+  User copyWith({
+    int? age,
+    String? sId,
+    String? name,
+    String? email,
+    String? createdAt,
+    String? updatedAt,
+    int? iV,
+  }) {
+    return User(
+      age: age ?? this.age,
+      sId: sId ?? this.sId,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      iV: iV ?? this.iV,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'age': age,
+      'sId': sId,
+      'name': name,
+      'email': email,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'iV': iV,
+    };
+  }
+
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      age: map['age'],
+      sId: map['sId'],
+      name: map['name'],
+      email: map['email'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      iV: map['iV'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
+  @override
   String toString() {
-    return 'UserModel(email: $email, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, age: $age)';
+    return 'User(age: $age, sId: $sId, name: $name, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, iV: $iV)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is UserModel &&
+    return other is User &&
+        other.age == age &&
+        other.sId == sId &&
+        other.name == name &&
         other.email == email &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt &&
-        other.name == name &&
-        other.age == age;
+        other.iV == iV;
   }
 
   @override
   int get hashCode {
-    return email.hashCode ^
+    return age.hashCode ^
+        sId.hashCode ^
+        name.hashCode ^
+        email.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode ^
-        name.hashCode ^
-        age.hashCode;
+        iV.hashCode;
   }
 }

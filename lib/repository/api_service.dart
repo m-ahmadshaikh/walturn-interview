@@ -23,10 +23,11 @@ class ApiService {
         }),
       );
       if (response.statusCode == 200) {
-        print(response.body);
         var model = UserModel.fromJson(response.body);
 
         return model;
+      } else {
+        throw Exception(response.body.toString());
       }
     } catch (e) {
       throw Exception(e.toString());
